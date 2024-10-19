@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-class hashtable {
+class HashTable {
 private:
     vector<int> table;
     int m;              
@@ -55,7 +55,7 @@ private:
     }
 
 public:
-    hashtable(int size) {
+    HashTable(int size) {
         m = size;
         table.resize(m, -1); 
         numElements = 0;
