@@ -9,13 +9,14 @@ private:
     int m;              
     int numElements;    
     
-    static constexpr double loadFactor_threshold = 0.8; 
+    static constexpr double loadFactor_threshold = 0.8;  
 
-    int hash(int key) {
+    
+    int hashFunction(int key) {
         return key % m;
     }
 
-    bool primecheck(int n) {
+    bool isPrime(int n) {
         if (n <= 1) return false;
         if (n == 2 || n == 3) return true;
         if (n % 2 == 0 || n % 3 == 0) return false;
@@ -26,16 +27,17 @@ private:
         return true;
     }
 
-    int nextprime(int n) {
-        while (!primecheck(n)) {
+   
+    int nextPrime(int n) {
+        while (!isPrime(n)) {
             n++;
         }
         return n;
     }
 
-    void sizingtable() {
+    void resizeTable() {
         int old_m = m;
-        m = nextprime(2 * old_m); 
+        m = nextPrime(2 * old_m); 
 
         cout << "Table resized from " << old_m << " to " << m << endl;
 
@@ -51,31 +53,33 @@ private:
         }
     }
 
-    double loadfactor() {
+    double loadFactor() {
         return (double)numElements / m;
     }
 
 public:
+    // Constructor
     HashTable(int size) {
         m = size;
         table.resize(m, -1); 
         numElements = 0;
     }
 
-    void insert(int key) {
+       void insert(int key) {
         if (search(key) != -1) {
             cout << "Duplicate key insertion is not allowed" << endl;
             return;
         }
 
-        if (loadfactor() > loadFactor_threshold) {
-            sizingtable();
+        if (loadFactor() > loadFactor_threshold) {
+            resizeTable();
         }
 
-        int index = hash(key);
+        int index = hashFunction(key);
         int i = 0;
         int newIndex = index;
 
+       
         while (table[newIndex] != -1) {
             i++;
             newIndex = (index + i * i) % m;
@@ -90,8 +94,9 @@ public:
         numElements++;
     }
 
+   
     void remove(int key) {
-        int index = hash(key);
+        int index = hashFunction(key);
         int i = 0;
         int newIndex = index;
 
@@ -107,14 +112,15 @@ public:
         cout << "Element not found" << endl;
     }
 
+    
     int search(int key) {
-        int index = hash(key);
+        int index = hashFunction(key);
         int i = 0;
         int newIndex = index;
 
         while (table[newIndex] != -1) {
             if (table[newIndex] == key) {
-                return newIndex; 
+                return newIndex;  
             }
             i++;
             newIndex = (index + i * i) % m;
@@ -126,7 +132,8 @@ public:
         return -1;  
     }
 
-    void printtable() {
+    
+    void printTable() {
         for (int i = 0; i < m; ++i) {
             if (table[i] == -1) {
                 cout << "- ";
