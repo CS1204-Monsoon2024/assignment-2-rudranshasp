@@ -8,8 +8,9 @@ private:
     vector<int> table;
     int m;              
     int numElements;    
-    const double loadFactor_threshold = 0.8;  
-
+    
+    static constexpr double loadFactor_threshold = 0.8; 
+gi
     int hash(int key) {
         return key % m;
     }
