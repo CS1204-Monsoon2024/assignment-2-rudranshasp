@@ -10,7 +10,7 @@ private:
     int numElements;    
     
     static constexpr double loadFactor_threshold = 0.8; 
-gi
+
     int hash(int key) {
         return key % m;
     }
